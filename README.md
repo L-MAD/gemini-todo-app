@@ -15,6 +15,7 @@ View your app in AI Studio: https://ai.studio/apps/drive/1iaHeI4H08TXNSWIMbVZ9Jo
 
 1. Install dependencies:
    `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
+2. Optional: Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
 3. Run the app:
    `npm run dev`
+4. e2e cypress tests: npx cypress open
