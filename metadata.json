@@ -1,0 +1,5 @@
+{
+  "name": "Task Master",
+  "description": "A robust Todo application featuring strict validation constraints, priority logic, and AI-powered task breakdown to help you stay organized.",
+  "requestFramePermissions": []
+}
