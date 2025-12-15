@@ -312,3 +312,83 @@ describe("TEST-4 Due Date Task Creation", () => {
     cy.contains(taskTitle).should("be.visible");
   });
 });
+
+describe("TEST-5 Priority Levels", () => {
+  const getISODate = (dayOffset = 0) => {
+    const date = new Date();
+    date.setDate(date.getDate() + dayOffset);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  };
+
+  beforeEach(() => {
+    cy.visit("http://localhost:3000");
+  });
+
+  it("TC-20 Select 'Low' Priority", function () {
+    const taskTitle = "Task with Low Priority";
+
+    cy.get("#root input.w-full").type(taskTitle);
+    cy.get('#root input[type="date"]').type(getISODate(0), { force: true });
+
+    // Select Low
+    cy.get("#root select.border").select("Low");
+
+    cy.get("#root button.text-white").click();
+
+    cy.contains(taskTitle).should("be.visible");
+    cy.contains("Low").should("be.visible");
+  });
+
+  it("TC-21 Select 'Medium' Priority", function () {
+    const taskTitle = "Task with Medium Priority";
+
+    cy.get("#root input.w-full").type(taskTitle);
+    cy.get('#root input[type="date"]').type(getISODate(0), { force: true });
+
+    // Select Medium explicitly
+    cy.get("#root select.border").select("Medium");
+
+    cy.get("#root button.text-white").click();
+
+    cy.contains(taskTitle).should("be.visible");
+    cy.contains("Medium").should("be.visible");
+  });
+
+  it("TC-22 Select 'High' Priority", function () {
+    const taskTitle = "Task with High Priority";
+
+    cy.get("#root input.w-full").type(taskTitle);
+    cy.get('#root input[type="date"]').type(getISODate(0), { force: true });
+
+    // Select High
+    cy.get("#root select.border").select("High");
+
+    cy.get("#root button.text-white").click();
+
+    cy.contains(taskTitle).should("be.visible");
+    cy.contains("High").should("be.visible");
+  });
+
+  it("TC-23 Default Priority (Should be Medium)", function () {
+    const taskTitle = "Task with Default Priority";
+
+    // 1. Assert: Check dropdown value BEFORE interaction
+    // Note: This checks the 'value' attribute. If your app uses "Medium" as the value, this works.
+    // If your app uses lowercase "medium" or IDs (1, 2, 3), update the 'have.value' accordingly.
+    cy.get("#root select.border").should("have.value", "Medium");
+
+    // 2. Fill ONLY Mandatory Fields (Do NOT touch the dropdown)
+    cy.get("#root input.w-full").type(taskTitle);
+    cy.get('#root input[type="date"]').type(getISODate(0), { force: true });
+
+    // 3. Submit
+    cy.get("#root button.text-white").click();
+
+    // 4. Assert: Task is created and is Medium
+    cy.contains(taskTitle).should("be.visible");
+    cy.contains("Medium").should("be.visible");
+  });
+});
