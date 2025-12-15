@@ -1,6 +1,8 @@
 describe("TEST-1 Task title", () => {
-  it("TC-1 Task title is empty", function () {
+  beforeEach(() => {
     cy.visit("http://localhost:3000");
+  });
+  it("TC-1 Task title is empty", function () {
     cy.get("#root input.w-full").click();
     cy.get("#root button.text-white").click();
     cy.get("#root p.text-slate-500.font-medium").should(
@@ -19,7 +21,85 @@ describe("TEST-1 Task title", () => {
   });
 
   it("TC-2 Task title is is below 3 char", function () {
-    cy.visit("http://localhost:3000");
+    cy.get("#root input.w-full").click();
+    cy.get("#root input.w-full").type("AB");
+    cy.get("#root button.text-white").click();
+    cy.get("#root p.text-sm.font-medium").should(
+      "have.text",
+      "Title must be at least 3 characters.",
+    );
+    cy.get("#root p.text-slate-500.font-medium").click();
+    cy.get("#root p.text-slate-500.font-medium").should(
+      "have.text",
+      "No tasks found",
+    );
+  });
+
+  it("TC-3 Task title is 3 characters", function () {
+    cy.get("#root input.w-full").click();
+    cy.get("#root input.w-full").type("ABC");
+    cy.get("#root button.text-white").click();
+    cy.get("#root h3.text-base").should("have.text", "ABC");
+    cy.get("#root h3.text-base").should("be.visible");
+    cy.get("#root div.p-4.flex").should("be.visible");
+    cy.get("#root input.w-full").should(
+      "have.attr",
+      "placeholder",
+      "What needs to be done?",
+    );
+  });
+
+  it("TC-4 Task title is 8 characters", function () {
+    cy.get("#root input.w-full").click();
+    cy.get("#root input.w-full").type("Buy Milk");
+    cy.get("#root button.text-white").click();
+    cy.get("#root h3.text-base").should("have.text", "Buy Milk");
+    cy.get("#root h3.text-base").should("be.visible");
+    cy.get("#root div.p-4.flex").should("be.visible");
+    cy.get("#root input.w-full").should(
+      "have.attr",
+      "placeholder",
+      "What needs to be done?",
+    );
+  });
+
+  it("TC-5 Task title is 60 characters", function () {
+    cy.get("#root input.w-full").click();
+    cy.get("#root input.w-full").type(
+      "ExercisingExercisingExercisingExercisingExercisingExercising",
+    );
+    cy.get("#root button.text-white").click();
+    cy.get("#root h3.text-base").should(
+      "have.text",
+      "ExercisingExercisingExercisingExercisingExercisingExercising",
+    );
+    cy.get("#root h3.text-base").should("be.visible");
+    cy.get("#root div.p-4.flex").should("be.visible");
+    cy.get("#root input.w-full").should(
+      "have.attr",
+      "placeholder",
+      "What needs to be done?",
+    );
+  });
+
+  it("TC-6 Task title is 60 characters", function () {
+    cy.get("#root input.w-full").click();
+    cy.get("#root input.w-full").type(
+      "ExercisingExercisingExercisingExercisingExercisingExercising1",
+    );
+    cy.get("#root button.text-white").click();
+    cy.get("#root form.p-4").click();
+    cy.get("#root p.text-sm.font-medium").click();
+    cy.get("#root p.text-sm.font-medium").click();
+    cy.get("#root p.text-sm.font-medium").click();
+    cy.get("#root p.text-sm.font-medium").should(
+      "have.text",
+      "Title cannot exceed 60 characters.",
+    );
+    cy.get("#root p.text-slate-500.font-medium").should(
+      "have.text",
+      "No tasks found",
+    );
   });
 });
 
