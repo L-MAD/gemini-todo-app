@@ -1,6 +1,6 @@
 describe('TEST-1 Task title', () => {
 
-  it('Task title is empty', function() {
+  it('TC-1 Task title is empty', function() {
     cy.visit('http://localhost:3000')
     cy.get('#root input.w-full').click();
     cy.get('#root button.text-white').click();
@@ -13,7 +13,7 @@ describe('TEST-1 Task title', () => {
     cy.get('#root p.text-slate-500.font-medium').should('have.text', 'No tasks found');
   });
 
-  it('Task title is is below 3 char', function() {
+  it('TC-2 Task title is is below 3 char', function() {
     cy.visit('http://localhost:3000')
   });
 
